@@ -1,0 +1,49 @@
+## YAML Template.
+---
+spring:
+  datasource:
+    url: jdbc:h2:./data/metadb
+    username: admin
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  thymeleaf:
+    cache: false
+    templates_root: src/main/resources/templates/
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+      
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+    credentials:
+      profile-name: app-dev
+
+# You can create Access Key and Secret Key via below url.
+# https://us-east-1.console.aws.amazon.com/iam/home#/security_credentials
+aws:
+  access.key: ${AWS_ACCESS_KEY:your_access_key}
+  secret.key: ${AWS_SECRET_KEY:your_secret_key}
+  
+  temp.access.key: ${AWS_ACCESS_KEY:your_access_key}
+  temp.secret.key: ${AWS_SECRET_KEY:your_secret_key}
+  temp.session.token: ${AWS_SESSION_TOKEN:your_session_token}
+  s3:
+    bucket: ${AWS_S3_BUCKET:spring-medium-s3-bucket}
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error

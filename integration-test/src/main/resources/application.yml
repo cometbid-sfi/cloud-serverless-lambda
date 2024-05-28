@@ -1,0 +1,97 @@
+## YAML Template.
+---
+spring:
+  application.name: ecommerce-user-api
+  lifecycle.timeout-per-shutdown-phase: 30s
+  jackson:
+    default-property-inclusion: non-default
+    serialization:
+      indent-output: true
+  profiles:
+    active: dev #,prod
+  main: 
+    allow-bean-definition-overriding: true
+  datasource:
+    name: ecomm
+    url: jdbc:h2:mem:ecomm;DB_CLOSE_DELAY=-1;IGNORECASE=TRUE;DATABASE_TO_UPPER=false
+    driverClassName: org.h2.Driver   
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      settings.web-allow-others: false
+  jpa:
+    properties.hibernate.default_schema: ecomm
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.jdbc.time_zone: UTC
+    #defer-datasource-initialization: true
+    #hibernate.ddl-auto: update
+    show-sql: true
+    format_sql: true
+    generate-ddl: false
+    hibernate.ddl-auto: create-drop
+  flyway:
+    url: jdbc:h2:mem:ecomm
+    schemas: ecomm
+    user: sa
+    password:
+  cloud:
+    aws:
+      credentials:
+        profile-name: ${AWS_PROFILE_NAME}
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
+      sns:
+        region: ${AWS_SNS_REGION}
+
+org:
+  cometbid:
+    aws:
+      sns:
+        topic-arn: ${AWS_SNS_TOPIC_ARN}
+        
+springdoc:
+  # swagger-ui custom path
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: /v1/api-docs
+
+api:
+  common:
+    version: 1.0.0    
+    title: Cometbid Ecommerce Sample API built on Open API Specification
+    documentation: http://api.cometbid.org/payroll/api/v1/api-ui.html
+    help: https://api.cometbid.org/wiki/display/APIS/commonly-asked
+    reportError: https://sendreport.cometbid.org
+    technicalReport: 'Email us at: developers@cometbid.org'
+    description: Description of the API...
+    termsOfService: Our TERMS OF SERVICE
+    license: The MIT License 
+    licenseUrl: https://opensource.org/license/mit
+
+    externalDocDesc: Ecommerce ReadMe & User guide
+    externalDocUrl: https://github.com/cometbid-sfi/ecommerce/blob/main/README.md
+    contact:
+      name: Adebowale Oluwagbemiga Samuel
+      url: https://cometbid.org/
+      email: cometbid@cometbid.org
+    response:
+      includeMetadata: true
+      
+  default:
+    currency: USD
+    locale: en_US
+    timezone: America/New_York
+    
+  responseCodes:
+    ok.description: OK(Success)
+    created.description: Resource Created
+    badRequest.description: Bad Request due to invalid format of the request. See response message for more information
+    unauthorized.description: Unauthorized
+    forbidden.description: Forbidden
+    server.error.description: Server Failure
+    notFound.description: Not found, the specified id does not exist
+    conflict.description: Resource conflict, similar resource already exist
+    server.unavailable.description: Service Unavailable
+    unprocessableEntity.description: Unprocessable entity, input parameters caused the processing to fail. See response message for more information
